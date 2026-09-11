@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="top-header">
+
+        <h1>🎓 Student Management System</h1>
+
+        <p>
+            Centralized student record and academic information management dashboard
+        </p>
+
+        <div class="system-status">
+            ● Supabase Connected
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- STATISTICS -->
+        <section class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon">👨‍🎓</div>
+                <div class="stat-title">TOTAL STUDENTS</div>
+                <div class="stat-number" id="totalStudents">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-title">AVERAGE MARKS</div>
+                <div class="stat-number" id="averageMarks">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-title">HIGHEST MARKS</div>
+                <div class="stat-number" id="highestMarks">0</div>
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+        <nav class="tabs">
+
+            <button class="tab active" data-tab="dashboard">
+                🏠 Dashboard
+            </button>
+
+            <button class="tab" data-tab="add">
+                ➕ Add Student
+            </button>
+
+            <button class="tab" data-tab="update">
+                ✏️ Update Student
+            </button>
+
+            <button class="tab" data-tab="delete">
+                🗑️ Delete Student
+            </button>
+
+        </nav>
+
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="tab-content active">
+
+            <h2>Student Records</h2>
+
+            <p class="subtitle">
+                Monitor and manage all registered students.
+            </p>
+
+            <div class="content-card">
+
+                <button class="primary-btn" onclick="loadStudents()">
+                    🔄 Refresh Records
+                </button>
+
+                <div id="dashboardMessage" class="message"></div>
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Course</th>
+                                <th>Marks</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="studentTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ADD STUDENT -->
+        <section id="add" class="tab-content">
+
+            <h2>Register New Student</h2>
+
+            <p class="subtitle">
+                Add a new student record to Supabase.
+            </p>
+
+            <div class="content-card">
+
+                <div class="info-box">
+                    💡 Student ID is generated automatically by Supabase.
+                </div>
+
+                <div class="form-grid">
+
+                    <label>
+                        👤 Student Name
+
+                        <input
+                            id="addName"
+                            type="text"
+                            placeholder="Enter full name"
+                        >
+
+                    </label>
+
+
+                    <label>
+                        📚 Course
+
+                        <input
+                            id="addCourse"
+                            type="text"
+                            placeholder="e.g. Computer Science"
+                        >
+
+                    </label>
+
+                </div>
+
+
+                <label>
+                    📊 Marks
+
+                    <input
+                        id="addMarks"
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="1"
+                        placeholder="Enter marks"
+                    >
+
+                </label>
+
+
+                <button class="primary-btn" onclick="addStudent()">
+                    ➕ Register Student
+                </button>
+
+                <div id="addStatus" class="message"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- UPDATE STUDENT -->
+        <section id="update" class="tab-content">
+
+            <h2>Update Student Record</h2>
+
+            <p class="subtitle">
+                Modify an existing student record.
+            </p>
+
+            <div class="content-card">
+
+                <div class="info-box">
+                    🔎 Enter the Student ID of the record you want to modify.
+                </div>
+
+
+                <label>
+                    🆔 Student ID
+
+                    <input
+                        id="updateId"
+                        type="number"
+                        min="1"
+                        step="1"
+                        placeholder="Enter student ID"
+                    >
+
+                </label>
+
+
+                <div class="form-grid">
+
+                    <label>
+                        👤 Student Name
+
+                        <input
+                            id="updateName"
+                            type="text"
+                            placeholder="Enter updated name"
+                        >
+
+                    </label>
+
+
+                    <label>
+                        📚 Course
+
+                        <input
+                            id="updateCourse"
+                            type="text"
+                            placeholder="Enter updated course"
+                        >
+
+                    </label>
+
+                </div>
+
+
+                <label>
+                    📊 Marks
+
+                    <input
+                        id="updateMarks"
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="1"
+                        placeholder="Enter updated marks"
+                    >
+
+                </label>
+
+
+                <button class="primary-btn" onclick="updateStudent()">
+                    ✏️ Update Record
+                </button>
+
+                <div id="updateStatus" class="message"></div>
+
+
+                <h3>Current Records</h3>
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Course</th>
+                                <th>Marks</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="updateTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DELETE STUDENT -->
+        <section id="delete" class="tab-content">
+
+            <h2>Remove Student Record</h2>
+
+            <p class="subtitle">
+                Delete an existing student record from Supabase.
+            </p>
+
+
+            <div class="content-card">
+
+                <div class="danger-box">
+                    ⚠️ Deleting a student record permanently removes it from the database.
+                </div>
+
+
+                <label>
+                    🆔 Student ID
+
+                    <input
+                        id="deleteId"
+                        type="number"
+                        min="1"
+                        step="1"
+                        placeholder="Enter student ID"
+                    >
+
+                </label>
+
+
+                <button class="danger-btn" onclick="deleteStudent()">
+                    🗑️ Delete Student
+                </button>
+
+                <div id="deleteStatus" class="message"></div>
+
+
+                <h3>Remaining Records</h3>
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Course</th>
+                                <th>Marks</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="deleteTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <hr>
+
+        <b>🎓 Student Management System</b>
+
+        <br><br>
+
+        HTML + CSS + JavaScript Frontend
+        &nbsp; • &nbsp;
+        FastAPI Backend
+        &nbsp; • &nbsp;
+        Supabase PostgreSQL
+
+        <br><br>
+
+        Student Record Management Platform
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
