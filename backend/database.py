@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(SUPABASE_URL)
 
 SessionLocal = sessionmaker(
     autocommit=False,
